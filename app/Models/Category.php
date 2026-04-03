@@ -17,12 +17,14 @@ class Category extends Model
         'color',
         'type',
         'is_default',
+        'monthly_limit',
     ];
 
     protected function casts(): array
     {
         return [
             'is_default' => 'boolean',
+            'monthly_limit' => 'decimal:2',
         ];
     }
 

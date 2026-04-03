@@ -1,7 +1,7 @@
 # Korisnički priručnik — Personal Finance Tracker
 
 > Ovaj dokument se dopunjava nakon svake faze razvoja.
-> Poslednje ažuriranje: 2026-04-04 (Faza 3)
+> Poslednje ažuriranje: 2026-04-04 (Faza 4)
 
 ---
 
@@ -40,7 +40,47 @@ Personal Finance Tracker je web aplikacija koja ti pomaže da:
 
 ## 3. Dashboard
 
-> Sekcija se popunjava u Fazi 4
+Dashboard je početna stranica nakon prijave. Prikazuje pregled tvojih finansija na jednom mestu.
+
+### Period switcher
+
+U gornjem desnom uglu možeš izabrati period za koji se prikazuju podaci:
+- **Ovaj mesec** (podrazumevano)
+- **Prošli mesec**
+- **Poslednja 3 meseca**
+
+### Summary kartice
+
+Na vrhu su 4 kartice:
+| Kartica | Opis |
+|---------|------|
+| **Tekući balans** | Tvoj ukupni balans u aplikaciji (pravi zbir svih transakcija) |
+| **Prihodi** | Suma prihoda u izabranom periodu |
+| **Rashodi** | Suma rashoda u izabranom periodu |
+| **Neto perioda** | Prihodi minus rashodi za izabrani period |
+
+### Dospele planirane transakcije
+
+Ako imaš planirane transakcije čiji je datum dospeća prošao, prikazuju se kao crveni alert sa dugmićima **Potvrdi** i **Preskoči** direktno iz dashboarda.
+
+### Grafici
+
+- **Prihodi vs Rashodi (dnevni)** — line chart koji prikazuje kretanje prihoda i rashoda po danima u izabranom periodu
+- **Rashodi po kategorijama** — donut chart koji vizuelno prikazuje udeo svake kategorije rashoda
+- **Mesečno poređenje** — bar chart koji poredi prihode i rashode po mesecima za poslednjih 6 meseci
+
+### Budžetski limiti
+
+Ako si nekim kategorijama rashoda postavio mesečni limit, ovde vidiš koliko si iskoristio:
+- Zelena traka → ispod 80% limita
+- Žuta traka → između 80% i 100% (blizu limita)
+- Crvena traka → prekoračen limit
+
+### Poslednje transakcije i predstojeće planirane
+
+Na dnu dashboarda su dva panela:
+- **Poslednje transakcije** — 10 najnovijih unosa
+- **Predstojeće u narednih 7 dana** — planirane transakcije koje dospevaju uskoro
 
 ---
 
@@ -60,7 +100,8 @@ Nakon registracije, aplikacija automatski kreira 13 podrazumevanih kategorija (4
 2. Unesi naziv (maks. 100 karaktera)
 3. Izaberi tip: **Prihod** ili **Rashod**
 4. Izaberi boju
-5. Klikni **Sačuvaj**
+5. Opcionalno unesi **mesečni limit (RSD)** — samo za rashode, prikazuje se kao progress bar na dashboardu
+6. Klikni **Sačuvaj**
 
 ### Izmena kategorije
 

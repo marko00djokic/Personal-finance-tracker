@@ -14,10 +14,11 @@ class StoreCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'  => ['required', 'string', 'max:100'],
-            'type'  => ['required', 'in:income,expense'],
-            'color' => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
-            'icon'  => ['nullable', 'string', 'max:50'],
+            'name'          => ['required', 'string', 'max:100'],
+            'type'          => ['required', 'in:income,expense'],
+            'color'         => ['required', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
+            'icon'          => ['nullable', 'string', 'max:50'],
+            'monthly_limit' => ['nullable', 'numeric', 'min:0'],
         ];
     }
 }

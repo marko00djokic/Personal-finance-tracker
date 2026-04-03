@@ -1,6 +1,35 @@
 # Progress Log
 
 ## Poslednja sesija: 2026-04-04
+### Šta je urađeno (Faza 4):
+- Nova migracija `add_monthly_limit_to_categories_table` — dodaje nullable decimal kolonu `monthly_limit` u tabelu categories
+- Ažuriran `Category` model: `monthly_limit` dodat u `$fillable` i `$casts`
+- Ažurirani `StoreCategoryRequest` i `UpdateCategoryRequest`: dodato pravilo `nullable|numeric|min:0` za `monthly_limit`
+- Ažurirani Blade view-ovi `categories/create.blade.php` i `categories/edit.blade.php`: novo polje za unos mesečnog limita
+- Kreiran `DashboardController` sa sledećim agregatima:
+  - Prihodi/rashodi/neto za izabrani period
+  - Poslednjih 10 transakcija
+  - Predstojeće planirane transakcije (narednih 7 dana)
+  - Dospele planirane transakcije
+  - Dnevni podaci za line chart (prihodi vs rashodi po danima u periodu)
+  - Rashodi po kategorijama za donut chart
+  - Mesečni agregat za bar chart (poslednjih 6 meseci)
+  - Budžetski progres po kategorijama sa limitom
+- Period switcher: Ovaj mesec / Prošli mesec / Poslednja 3 meseca (GET param `period`)
+- Ažuriran `routes/web.php`: dashboard ruta sada koristi `DashboardController@index`
+- Kompletno prepisan `dashboard.blade.php`:
+  - 4 summary kartice (balans, prihodi, rashodi, neto)
+  - Alert sekcija za dospele planirane transakcije sa Potvrdi/Preskoči akcijama
+  - Line chart: dnevni prihodi vs rashodi (Chart.js via CDN)
+  - Donut chart: rashodi po kategorijama
+  - Bar chart: poređenje prihoda i rashoda po mesecima (poslednjih 6)
+  - Budget progress bars sa zelena/žuta/crvena logikom
+  - Lista poslednjih 10 transakcija
+  - Lista predstojećih planiranih transakcija (7 dana)
+
+---
+
+## Prethodna sesija: 2026-04-04
 ### Šta je urađeno (Faza 3):
 - Kreiran `PlannedTransactionService` sa metodom `calculateNextDueDate()`:
   - none → vraća null (transakcija se deaktivira)
@@ -84,7 +113,7 @@
 | Kategorije CRUD         | ✅ Završeno          |
 | Transakcije CRUD        | ✅ Završeno          |
 | Recurring transakcije   | ✅ Završeno          |
-| Dashboard / Grafovi     | ❌ Nije početo       |
+| Dashboard / Grafovi     | ✅ Završeno          |
 | Export (CSV/PDF)        | ❌ Nije početo       |
 
 ---
@@ -115,9 +144,23 @@
 
 ---
 
+## Poslednji fajlovi koje smo dirali (Faza 4)
+
+- `database/migrations/2026_04_03_221241_add_monthly_limit_to_categories_table.php`
+- `app/Models/Category.php`
+- `app/Http/Requests/StoreCategoryRequest.php`
+- `app/Http/Requests/UpdateCategoryRequest.php`
+- `app/Http/Controllers/DashboardController.php`
+- `routes/web.php`
+- `resources/views/dashboard.blade.php`
+- `resources/views/categories/create.blade.php`
+- `resources/views/categories/edit.blade.php`
+
+---
+
 ## Sledeća sesija treba da počne sa:
 
-**Faza 4 — Dashboard i Grafovi**
+**Faza 5 — Polish & Export**
 
 Prompt za ovu fazu se nalazi u:
-`docs/Personal-finance-tracker.md` → sekcija **FAZA 4 PROMPT**
+`docs/Personal-finance-tracker.md` → sekcija **FAZA 5 PROMPT**

@@ -1,7 +1,7 @@
 # Technical Manual — Personal Finance Tracker
 
 > Ovaj dokument se dopunjava nakon svake faze razvoja.
-> Poslednje ažuriranje: 2026-04-04 (Faza 3)
+> Poslednje ažuriranje: 2026-04-04 (Faza 4)
 
 ---
 
@@ -131,7 +131,7 @@ Izračunava sledeći datum dospeća:
 
 | Klasa | Validira |
 |-------|----------|
-| `StoreCategoryRequest` | name, type, color (hex regex), icon |
+| `StoreCategoryRequest` | name, type, color (hex regex), icon, monthly_limit (nullable numeric) |
 | `UpdateCategoryRequest` | Iste kao Store |
 | `StoreTransactionRequest` | type, amount (0.01–9999999.99), category_id, transaction_date, description |
 | `UpdateTransactionRequest` | Iste kao Store |
@@ -178,6 +178,43 @@ Da bi schedule radio, mora biti aktiviran cron na serveru:
 ```bash
 * * * * * cd /path-to-project && php artisan schedule:run >> /dev/null 2>&1
 ```
+
+---
+
+### DashboardController (`app/Http/Controllers/DashboardController.php`)
+
+Centralizuje sve agregatne upite za dashboard stranicu:
+
+| Podatak | Opis |
+|---------|------|
+| `income`, `expenses`, `net` | Suma prihoda/rashoda/neto za izabrani period |
+| `recentTransactions` | Poslednjih 10 transakcija (eager load category) |
+| `upcomingPlanned` | Planirane transakcije u narednih 7 dana |
+| `duePlanned` | Planirane transakcije čiji je datum dospeća prošao |
+| `dailyData` | Dnevni podaci za line chart (labels, income[], expenses[]) |
+| `categoryExpenses` | Rashodi grupisani po kategoriji za donut chart |
+| `monthlyData` | Mesečni podaci za bar chart — poslednjih 6 meseci |
+| `budgetCategories` | Kategorije sa limitom + spent + % + CSS klasa |
+
+**Period switcher** — GET param `period`:
+- `this_month` (default) — od prvog do poslednjeg dana tekućeg meseca
+- `last_month` — prošli mesec
+- `last_3_months` — od pre 3 meseca do kraja tekućeg meseca
+
+**Budget progress logic:**
+- `pct < 80%` → zelena (`bg-green-500`)
+- `80% ≤ pct < 100%` → žuta (`bg-yellow-400`)
+- `pct ≥ 100%` → crvena (`bg-red-500`)
+
+---
+
+### categories.monthly_limit kolona
+
+Dodata migracija `add_monthly_limit_to_categories_table`:
+```php
+$table->decimal('monthly_limit', 15, 2)->nullable()->after('is_default');
+```
+Koristi se isključivo za rashode. Ako `null` ili `0`, kategorija nema limit i neće se prikazati u budget sekciji.
 
 ---
 

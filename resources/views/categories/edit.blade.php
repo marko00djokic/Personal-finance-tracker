@@ -46,6 +46,21 @@
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
+
+                        <div>
+                            <label for="monthly_limit" class="block text-sm font-medium text-gray-700 mb-1">
+                                Mesečni limit (RSD)
+                                <span class="ml-1 text-xs text-gray-400 font-normal">— samo za rashode, opciono</span>
+                            </label>
+                            <input type="number" id="monthly_limit" name="monthly_limit"
+                                   value="{{ old('monthly_limit', $category->monthly_limit) }}"
+                                   min="0" step="0.01"
+                                   class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                   placeholder="npr. 20000">
+                            @error('monthly_limit')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
 
                     <div class="mt-6 flex justify-end gap-3">

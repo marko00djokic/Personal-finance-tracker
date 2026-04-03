@@ -43,18 +43,18 @@
 - [x] Badge u navigaciji sa brojem dospelih planned transakcija
 - [x] Sekcija "Dospele danas" na planned-transactions/index
 
-## FAZA 4 — Dashboard & Grafovi
-- [ ] DashboardController sa svim potrebnim agregatima
-- [ ] Summary cards (balans, prihodi, rashodi, neto mesec)
-- [ ] Lista poslednjih 10 transakcija na dashboardu
-- [ ] Widget za upcoming planned transactions (7 dana)
-- [ ] Instalacija Chart.js
-- [ ] Line chart: prihodi vs rashodi po danima (tekući mesec)
-- [ ] Pie/Donut chart: rashodi po kategorijama (tekući mesec)
-- [ ] Bar chart: prihodi vs rashodi po mesecima (poslednjih 6)
-- [ ] Dodavanje `monthly_limit` kolone u categories tabelu (nova migracija)
-- [ ] Progress bar indikatori budžetskih limita po kategoriji
-- [ ] Period switcher (ovaj mesec / prošli mesec / posled. 3 meseca)
+## FAZA 4 — Dashboard & Grafovi ✅ ZAVRŠENO
+- [x] DashboardController sa svim potrebnim agregatima
+- [x] Summary cards (balans, prihodi, rashodi, neto mesec)
+- [x] Lista poslednjih 10 transakcija na dashboardu
+- [x] Widget za upcoming planned transactions (7 dana)
+- [x] Instalacija Chart.js (via CDN)
+- [x] Line chart: prihodi vs rashodi po danima (tekući mesec)
+- [x] Pie/Donut chart: rashodi po kategorijama (tekući mesec)
+- [x] Bar chart: prihodi vs rashodi po mesecima (poslednjih 6)
+- [x] Dodavanje `monthly_limit` kolone u categories tabelu (nova migracija)
+- [x] Progress bar indikatori budžetskih limita po kategoriji
+- [x] Period switcher (ovaj mesec / prošli mesec / posled. 3 meseca)
 
 ## FAZA 5 — Polish & Export
 - [ ] ExportController sa CSV i PDF akcijama
