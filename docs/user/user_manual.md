@@ -46,13 +46,76 @@ Personal Finance Tracker je web aplikacija koja ti pomaže da:
 
 ## 4. Upravljanje kategorijama
 
-> Sekcija se popunjava u Fazi 2
+Nakon registracije, aplikacija automatski kreira 13 podrazumevanih kategorija (4 prihoda, 9 rashoda) na tvom nalogu. Možeš ih menjati ili dodavati nove.
+
+### Pregled kategorija
+
+- Klikni na **Kategorije** u navigaciji
+- Kategorije su grupisane u dve kolone: Prihodi i Rashodi
+- Svaka kategorija ima boju i naziv
+
+### Dodavanje kategorije
+
+1. Na stranici Kategorije, klikni **+ Nova kategorija**
+2. Unesi naziv (maks. 100 karaktera)
+3. Izaberi tip: **Prihod** ili **Rashod**
+4. Izaberi boju
+5. Klikni **Sačuvaj**
+
+### Izmena kategorije
+
+1. Pored kategorije klikni **Izmeni**
+2. Promeni željene podatke
+3. Klikni **Sačuvaj izmene**
+
+### Brisanje kategorije
+
+- Klikni **Obriši** pored kategorije i potvrdi dijalog
+- Kategorija se **ne može obrisati** ako ima vezanih transakcija — moraš prvo obrisati ili promeniti kategoriju tim transakcijama
 
 ---
 
 ## 5. Unos transakcija
 
-> Sekcija se popunjava u Fazi 2
+### Pregled transakcija
+
+- Klikni na **Transakcije** u navigaciji
+- Lista je sortirana od najnovijeg ka starijem
+- Prikazuje se 20 transakcija po stranici
+
+### Filtriranje
+
+Na vrhu liste možeš filtrirati po:
+- **Od datuma / Do datuma** — vremenski opseg
+- **Kategorija** — konkretna kategorija
+- **Tip** — Prihod ili Rashod
+
+Klikni **Filtriraj** za primenu, **Reset** za uklanjanje filtera.
+
+### Dodavanje transakcije
+
+1. Klikni **+ Nova transakcija**
+2. Izaberi tip: **Prihod** ili **Rashod**
+3. Unesi iznos u RSD
+4. Izaberi kategoriju (grupisano po tipu)
+5. Unesi datum (podrazumevano: danas)
+6. Opcionalno unesi opis
+7. Klikni **Dodaj transakciju**
+
+Tekući balans se automatski ažurira (prihod ga povećava, rashod smanjuje).
+
+### Izmena transakcije
+
+1. Klikni **Izmeni** pored transakcije
+2. Promeni željene podatke
+3. Klikni **Sačuvaj izmene**
+
+Balans se automatski koriguje (stari efekat se poništava, novi primenjuje).
+
+### Brisanje transakcije
+
+- Klikni **Obriši** pored transakcije i potvrdi dijalog
+- Efekat transakcije na balans se automatski poništava
 
 ---
 

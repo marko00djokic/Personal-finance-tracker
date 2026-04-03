@@ -15,7 +15,22 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('transactions.index')" :active="request()->routeIs('transactions.*')">
+                        {{ __('Transakcije') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
+                        {{ __('Kategorije') }}
+                    </x-nav-link>
                 </div>
+            </div>
+
+            <!-- Balance Display -->
+            <div class="hidden sm:flex sm:items-center sm:ms-6">
+                @auth
+                    <span class="text-sm font-medium {{ Auth::user()->current_balance >= 0 ? 'text-green-600' : 'text-red-600' }}">
+                        {{ number_format(Auth::user()->current_balance, 2, ',', '.') }} RSD
+                    </span>
+                @endauth
             </div>
 
             <!-- Settings Dropdown -->
@@ -69,6 +84,12 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('transactions.index')" :active="request()->routeIs('transactions.*')">
+                {{ __('Transakcije') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
+                {{ __('Kategorije') }}
             </x-responsive-nav-link>
         </div>
 

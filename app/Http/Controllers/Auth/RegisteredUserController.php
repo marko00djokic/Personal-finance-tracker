@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -45,6 +46,16 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+
+        Category::where('is_default', true)->get()->each(function ($default) use ($user) {
+            $user->categories()->create([
+                'name'       => $default->name,
+                'icon'       => $default->icon,
+                'color'      => $default->color,
+                'type'       => $default->type,
+                'is_default' => false,
+            ]);
+        });
 
         return redirect(route('dashboard', absolute: false));
     }

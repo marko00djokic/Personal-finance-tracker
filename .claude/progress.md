@@ -1,6 +1,30 @@
 # Progress Log
 
 ## Poslednja sesija: 2026-04-03
+### Šta je urađeno (Faza 2):
+- Kreiran `BalanceService` sa metodama apply/reverse/reapply
+- Kreiran `StoreCategoryRequest` i `UpdateCategoryRequest`
+- Kreiran `StoreTransactionRequest` i `UpdateTransactionRequest`
+- Kreiran `CategoryController` (index, create, store, edit, update, destroy)
+  - Zaštita od brisanja ako kategorija ima transakcije
+  - Auth check (abort 403 ako nije vlasnik)
+- Kreiran `TransactionController` (index, create, store, edit, update, destroy)
+  - Filter po datumu (from/to), kategoriji, tipu
+  - Paginacija 20 po stranici
+  - Balance logika: store += amount, destroy reverz, update reapply
+- Kreiran `CategoryController` sa resource routes `/categories`
+- Kreiran `TransactionController` sa resource routes `/transactions`
+- Ažuriran `routes/web.php` — dodati resource route-ovi za kategorije i transakcije
+- Ažuriran `RegisteredUserController` — kopira default kategorije novom korisniku pri registraciji
+- Ažuriran `layouts/navigation.blade.php` — dodati linkovi (Transakcije, Kategorije) i prikaz balansa
+- Ažuriran `layouts/app.blade.php` — dodati flash poruke (success/error, auto-hide sa Alpine.js)
+- Kreirani Blade view-ovi za kategorije: `index`, `create`, `edit`
+- Kreirani Blade view-ovi za transakcije: `index`, `create`, `edit`
+- Ažuriran `dashboard.blade.php` — prikaz tekućeg balansa i quick linkovi
+
+---
+
+## Prethodna sesija: 2026-04-03
 ### Šta je urađeno (Faza 1):
 - Instaliran Laravel 11 (v11.51.0) u root projektnog direktorijuma
 - Instaliran Laravel Breeze (v2.4.1) sa Blade + Alpine.js stack-om
@@ -30,47 +54,47 @@
 | Laravel instalacija     | ✅ Završeno          |
 | Auth (Breeze)           | ✅ Završeno          |
 | Baza / Migracije        | ✅ Završeno          |
-| Kategorije CRUD         | ❌ Nije početo       |
-| Transakcije CRUD        | ❌ Nije početo       |
+| Kategorije CRUD         | ✅ Završeno          |
+| Transakcije CRUD        | ✅ Završeno          |
 | Recurring transakcije   | ❌ Nije početo       |
 | Dashboard / Grafovi     | ❌ Nije početo       |
 | Export (CSV/PDF)        | ❌ Nije početo       |
 
 ---
 
-## Poslednji fajlovi koje smo dirali
+## Poslednji fajlovi koje smo dirali (Faza 2)
 
-- `database/migrations/2026_04_03_194422_add_current_balance_to_users_table.php`
-- `database/migrations/2026_04_03_194436_create_categories_table.php`
-- `database/migrations/2026_04_03_194444_create_transactions_table.php`
-- `database/migrations/2026_04_03_194452_create_planned_transactions_table.php`
-- `app/Models/User.php`
-- `app/Models/Category.php`
-- `app/Models/Transaction.php`
-- `app/Models/PlannedTransaction.php`
-- `database/factories/CategoryFactory.php`
-- `database/factories/TransactionFactory.php`
-- `database/factories/PlannedTransactionFactory.php`
-- `database/seeders/CategorySeeder.php`
-- `database/seeders/DatabaseSeeder.php`
-- `.env.example`
+- `app/Services/BalanceService.php`
+- `app/Http/Requests/StoreCategoryRequest.php`
+- `app/Http/Requests/UpdateCategoryRequest.php`
+- `app/Http/Requests/StoreTransactionRequest.php`
+- `app/Http/Requests/UpdateTransactionRequest.php`
+- `app/Http/Controllers/CategoryController.php`
+- `app/Http/Controllers/TransactionController.php`
+- `app/Http/Controllers/Auth/RegisteredUserController.php`
+- `routes/web.php`
+- `resources/views/layouts/app.blade.php`
+- `resources/views/layouts/navigation.blade.php`
+- `resources/views/categories/index.blade.php`
+- `resources/views/categories/create.blade.php`
+- `resources/views/categories/edit.blade.php`
+- `resources/views/transactions/index.blade.php`
+- `resources/views/transactions/create.blade.php`
+- `resources/views/transactions/edit.blade.php`
+- `resources/views/dashboard.blade.php`
 
 ---
 
 ## Poznati problemi / Tech debt
 
-- Registracijom se NE kopiraju default kategorije korisniku — treba dodati logiku u `RegisteredUserController` (Faza 2 task)
-- `current_balance` nije prikazan nigde u UI — placeholder view nije kreiran
+- `current_balance` se ne rekalkuliše retroaktivno — vrednost u bazi mora biti konzistentna sa stvarnim stanjem transakcija
+- Nema admin sekcije za upravljanje default kategorijama
 
 ---
 
 ## Sledeća sesija treba da počne sa:
 
-**Faza 2 — Kategorije i Transakcije CRUD**
+**Faza 3 — Recurring (Planned) Transakcije**
 
 Prompt za ovu fazu se nalazi u:
-`docs/Personal-finance-tracker.md` → sekcija **FAZA 2 PROMPT**
-
-Pre nego što počnemo Fazu 2, treba:
-1. Dodati logiku u RegisteredUserController da kopira default kategorije novom korisniku
-2. Kreirati placeholder dashboard view koji prikazuje `current_balance`
+`docs/Personal-finance-tracker.md` → sekcija **FAZA 3 PROMPT**

@@ -12,24 +12,24 @@
 - [x] Definisanje relacija na svim modelima
 - [x] Kreiranje Factory klasa za sve modele
 - [x] Kreiranje CategorySeeder sa podrazumevanim kategorijama
-- [ ] Kopiranje default kategorija pri registraciji novog korisnika ← Faza 2
 - [x] `php artisan migrate:fresh --seed` mora proći bez grešaka
 - [x] Testiranje register/login/logout flow-a (Breeze spreman)
 
-## FAZA 2 — Transakcije & Kategorije
-- [ ] CategoryController sa svim CRUD metodama
-- [ ] Blade view-ovi za kategorije (index, create, edit)
-- [ ] StoreCategoryRequest i UpdateCategoryRequest validacija
-- [ ] Zaštita od brisanja kategorije koja ima transakcije
-- [ ] TransactionController sa svim CRUD metodama
-- [ ] Blade view-ovi za transakcije (index, create, edit)
-- [ ] StoreTransactionRequest i UpdateTransactionRequest validacija
-- [ ] Filter transakcija po datumu, kategoriji, tipu
-- [ ] Paginacija na listi transakcija (20 po stranici)
-- [ ] BalanceService — logika korekcije balansa pri CRUD operacijama
-- [ ] Prikaz tekućeg balansa u glavnoj navigaciji
-- [ ] Flash poruke (success/error) na svim operacijama
-- [ ] Potvrda pre brisanja (Alpine.js modal)
+## FAZA 2 — Transakcije & Kategorije ✅ ZAVRŠENO
+- [x] Kopiranje default kategorija pri registraciji novog korisnika
+- [x] CategoryController sa svim CRUD metodama
+- [x] Blade view-ovi za kategorije (index, create, edit)
+- [x] StoreCategoryRequest i UpdateCategoryRequest validacija
+- [x] Zaštita od brisanja kategorije koja ima transakcije
+- [x] TransactionController sa svim CRUD metodama
+- [x] Blade view-ovi za transakcije (index, create, edit)
+- [x] StoreTransactionRequest i UpdateTransactionRequest validacija
+- [x] Filter transakcija po datumu, kategoriji, tipu
+- [x] Paginacija na listi transakcija (20 po stranici)
+- [x] BalanceService — logika korekcije balansa pri CRUD operacijama
+- [x] Prikaz tekućeg balansa u glavnoj navigaciji
+- [x] Flash poruke (success/error) na svim operacijama
+- [x] Potvrda pre brisanja (browser confirm putem Alpine.js)
 
 ## FAZA 3 — Recurring transakcije
 - [ ] PlannedTransactionController sa svim CRUD metodama

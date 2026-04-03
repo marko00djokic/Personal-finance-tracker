@@ -1,7 +1,7 @@
 # Technical Manual — Personal Finance Tracker
 
 > Ovaj dokument se dopunjava nakon svake faze razvoja.
-> Poslednje ažuriranje: 2026-04-03 (inicijalizacija)
+> Poslednje ažuriranje: 2026-04-03 (Faza 2)
 
 ---
 
@@ -103,7 +103,38 @@ php artisan migrate
 
 ---
 
-## 5. Artisan komande
+## 5. Ključne klase i servisni sloj
+
+### BalanceService (`app/Services/BalanceService.php`)
+
+Centralizuje svu logiku korekcije `users.current_balance`:
+
+| Metoda | Opis |
+|--------|------|
+| `apply(User, type, amount)` | Primeni efekat transakcije (+income / -expense) |
+| `reverse(User, type, amount)` | Poništi efekat transakcije |
+| `reapply(User, oldTransaction, newType, newAmount)` | Reverz + primena — koristi se pri update-u |
+
+### FormRequest klase (`app/Http/Requests/`)
+
+| Klasa | Validira |
+|-------|----------|
+| `StoreCategoryRequest` | name, type, color (hex regex), icon |
+| `UpdateCategoryRequest` | Iste kao Store |
+| `StoreTransactionRequest` | type, amount (0.01–9999999.99), category_id, transaction_date, description |
+| `UpdateTransactionRequest` | Iste kao Store |
+
+### CategoryController — zaštita pri brisanju
+
+Pre brisanja kategorije poziva `$category->transactions()->exists()`. Ako vraća `true`, brisanje se odbija sa flash `error` porukom — bez soft-delete, bez kaskade.
+
+### TransactionController — filter logika
+
+Query builder u `index()` metodi prihvata `date_from`, `date_to`, `category_id`, `type` iz GET parametara. Paginacija: `->paginate(20)->withQueryString()` (čuva filtere kroz stranice).
+
+---
+
+## 6. Artisan komande
 
 > Sekcija se popunjava u Fazi 3 (planned transactions scheduler)
 
