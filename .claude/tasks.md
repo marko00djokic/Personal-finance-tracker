@@ -1,20 +1,20 @@
 # Task Backlog
 
-## FAZA 1 — Setup & Auth
-- [ ] Instalacija Laravel 11 projekta u root direktorijum
-- [ ] Instalacija i konfiguracija Laravel Breeze (Blade + Alpine.js stack)
-- [ ] Konfiguracija TailwindCSS i Vite (`npm install && npm run build`)
-- [ ] Kreiranje migracije za `categories` tabelu
-- [ ] Kreiranje migracije za `transactions` tabelu
-- [ ] Kreiranje migracije za `planned_transactions` tabelu
-- [ ] Proširivanje `users` tabele sa `current_balance` kolonom
-- [ ] Kreiranje Eloquent modela: Category, Transaction, PlannedTransaction
-- [ ] Definisanje relacija na svim modelima
-- [ ] Kreiranje Factory klasa za sve modele
-- [ ] Kreiranje CategorySeeder sa podrazumevanim kategorijama
-- [ ] Kopiranje default kategorija pri registraciji novog korisnika
-- [ ] `php artisan migrate:fresh --seed` mora proći bez grešaka
-- [ ] Testiranje register/login/logout flow-a
+## FAZA 1 — Setup & Auth ✅ ZAVRŠENO
+- [x] Instalacija Laravel 11 projekta u root direktorijum
+- [x] Instalacija i konfiguracija Laravel Breeze (Blade + Alpine.js stack)
+- [x] Konfiguracija TailwindCSS i Vite (`npm install && npm run build`)
+- [x] Kreiranje migracije za `categories` tabelu
+- [x] Kreiranje migracije za `transactions` tabelu
+- [x] Kreiranje migracije za `planned_transactions` tabelu
+- [x] Proširivanje `users` tabele sa `current_balance` kolonom
+- [x] Kreiranje Eloquent modela: Category, Transaction, PlannedTransaction
+- [x] Definisanje relacija na svim modelima
+- [x] Kreiranje Factory klasa za sve modele
+- [x] Kreiranje CategorySeeder sa podrazumevanim kategorijama
+- [ ] Kopiranje default kategorija pri registraciji novog korisnika ← Faza 2
+- [x] `php artisan migrate:fresh --seed` mora proći bez grešaka
+- [x] Testiranje register/login/logout flow-a (Breeze spreman)
 
 ## FAZA 2 — Transakcije & Kategorije
 - [ ] CategoryController sa svim CRUD metodama
