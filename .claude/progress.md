@@ -1,6 +1,33 @@
 # Progress Log
 
-## Poslednja sesija: 2026-04-03
+## Poslednja sesija: 2026-04-04
+### Šta je urađeno (Faza 3):
+- Kreiran `PlannedTransactionService` sa metodom `calculateNextDueDate()`:
+  - none → vraća null (transakcija se deaktivira)
+  - daily → +1 dan
+  - weekly → +7 dana
+  - monthly → recurrence_day tog meseca (ili poslednji dan ako mesec kraći)
+  - yearly → +1 godina
+- Kreiran `StorePlannedTransactionRequest` i `UpdatePlannedTransactionRequest`
+- Kreiran `PlannedTransactionController` sa:
+  - CRUD (index, create, store, edit, update, destroy)
+  - `confirm` akcija: kreira Transaction, primenjuje balans, pomera next_due_date
+  - `skip` akcija: samo pomera next_due_date (ili deaktivira ako none)
+  - `advanceDueDate()` helper: za `none` deaktivira, za ostale pomera datum
+- Kreiran Artisan command `planned-transactions:process` (logiraj dospele/nadolazeće)
+- Dodata schedule u `routes/console.php`: svaki dan u ponoć (00:00)
+- Ažuriran `routes/web.php`: resource route + confirm/skip POST route-ovi
+- Kreirani Blade view-ovi:
+  - `planned-transactions/index` — 3 sekcije: Dospele (crvena), Predstojeće, Neaktivne
+  - `planned-transactions/create` — form sa Alpine.js conditional za recurrence_day
+  - `planned-transactions/edit` — isti form popunjen existing podacima
+  - `planned-transactions/_recurrence_badge` — partial za badge tipa ponavljanja
+- Ažurirana `navigation.blade.php`: link "Planirane" + crveni badge ako ima dospelih
+- Ažuriran `dashboard.blade.php`: 4. kartica za planirane + sekcija dospelih sa Potvrdi/Preskoči
+
+---
+
+## Prethodna sesija: 2026-04-03
 ### Šta je urađeno (Faza 2):
 - Kreiran `BalanceService` sa metodama apply/reverse/reapply
 - Kreiran `StoreCategoryRequest` i `UpdateCategoryRequest`
@@ -56,31 +83,26 @@
 | Baza / Migracije        | ✅ Završeno          |
 | Kategorije CRUD         | ✅ Završeno          |
 | Transakcije CRUD        | ✅ Završeno          |
-| Recurring transakcije   | ❌ Nije početo       |
+| Recurring transakcije   | ✅ Završeno          |
 | Dashboard / Grafovi     | ❌ Nije početo       |
 | Export (CSV/PDF)        | ❌ Nije početo       |
 
 ---
 
-## Poslednji fajlovi koje smo dirali (Faza 2)
+## Poslednji fajlovi koje smo dirali (Faza 3)
 
-- `app/Services/BalanceService.php`
-- `app/Http/Requests/StoreCategoryRequest.php`
-- `app/Http/Requests/UpdateCategoryRequest.php`
-- `app/Http/Requests/StoreTransactionRequest.php`
-- `app/Http/Requests/UpdateTransactionRequest.php`
-- `app/Http/Controllers/CategoryController.php`
-- `app/Http/Controllers/TransactionController.php`
-- `app/Http/Controllers/Auth/RegisteredUserController.php`
+- `app/Services/PlannedTransactionService.php`
+- `app/Http/Requests/StorePlannedTransactionRequest.php`
+- `app/Http/Requests/UpdatePlannedTransactionRequest.php`
+- `app/Http/Controllers/PlannedTransactionController.php`
+- `app/Console/Commands/ProcessPlannedTransactions.php`
+- `routes/console.php`
 - `routes/web.php`
-- `resources/views/layouts/app.blade.php`
+- `resources/views/planned-transactions/index.blade.php`
+- `resources/views/planned-transactions/create.blade.php`
+- `resources/views/planned-transactions/edit.blade.php`
+- `resources/views/planned-transactions/_recurrence_badge.blade.php`
 - `resources/views/layouts/navigation.blade.php`
-- `resources/views/categories/index.blade.php`
-- `resources/views/categories/create.blade.php`
-- `resources/views/categories/edit.blade.php`
-- `resources/views/transactions/index.blade.php`
-- `resources/views/transactions/create.blade.php`
-- `resources/views/transactions/edit.blade.php`
 - `resources/views/dashboard.blade.php`
 
 ---
@@ -89,12 +111,13 @@
 
 - `current_balance` se ne rekalkuliše retroaktivno — vrednost u bazi mora biti konzistentna sa stvarnim stanjem transakcija
 - Nema admin sekcije za upravljanje default kategorijama
+- `planned-transactions:process` command samo loguje — ne šalje email/push notifikacije (planirano za kasniju fazu)
 
 ---
 
 ## Sledeća sesija treba da počne sa:
 
-**Faza 3 — Recurring (Planned) Transakcije**
+**Faza 4 — Dashboard i Grafovi**
 
 Prompt za ovu fazu se nalazi u:
-`docs/Personal-finance-tracker.md` → sekcija **FAZA 3 PROMPT**
+`docs/Personal-finance-tracker.md` → sekcija **FAZA 4 PROMPT**

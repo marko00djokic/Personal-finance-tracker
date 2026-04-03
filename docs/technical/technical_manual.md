@@ -1,7 +1,7 @@
 # Technical Manual — Personal Finance Tracker
 
 > Ovaj dokument se dopunjava nakon svake faze razvoja.
-> Poslednje ažuriranje: 2026-04-03 (Faza 2)
+> Poslednje ažuriranje: 2026-04-04 (Faza 3)
 
 ---
 
@@ -115,6 +115,18 @@ Centralizuje svu logiku korekcije `users.current_balance`:
 | `reverse(User, type, amount)` | Poništi efekat transakcije |
 | `reapply(User, oldTransaction, newType, newAmount)` | Reverz + primena — koristi se pri update-u |
 
+### PlannedTransactionService (`app/Services/PlannedTransactionService.php`)
+
+Izračunava sledeći datum dospeća:
+
+| `recurrence_type` | Logika |
+|-------------------|--------|
+| `none` | Vraća `null` — transakcija se deaktivira (`is_active = false`) |
+| `daily` | `+1 dan` |
+| `weekly` | `+7 dana` |
+| `monthly` | `recurrence_day` tog meseca (ili poslednji dan ako mesec kraći) |
+| `yearly` | `+1 godina` |
+
 ### FormRequest klase (`app/Http/Requests/`)
 
 | Klasa | Validira |
@@ -123,6 +135,8 @@ Centralizuje svu logiku korekcije `users.current_balance`:
 | `UpdateCategoryRequest` | Iste kao Store |
 | `StoreTransactionRequest` | type, amount (0.01–9999999.99), category_id, transaction_date, description |
 | `UpdateTransactionRequest` | Iste kao Store |
+| `StorePlannedTransactionRequest` | type, amount, category_id (nullable), description, recurrence_type, recurrence_day (nullable), next_due_date, is_active |
+| `UpdatePlannedTransactionRequest` | Iste kao Store |
 
 ### CategoryController — zaštita pri brisanju
 
@@ -134,9 +148,36 @@ Query builder u `index()` metodi prihvata `date_from`, `date_to`, `category_id`,
 
 ---
 
+### PlannedTransactionController — akcije potvrde i preskakanja
+
+| Akcija | Route | Opis |
+|--------|-------|------|
+| `confirm` | `POST /planned-transactions/{id}/confirm` | Kreira Transaction, primenjuje balans, pomera next_due_date |
+| `skip` | `POST /planned-transactions/{id}/skip` | Samo pomera next_due_date (ili deaktivira za `none`) |
+
+---
+
 ## 6. Artisan komande
 
-> Sekcija se popunjava u Fazi 3 (planned transactions scheduler)
+### `planned-transactions:process`
+
+```bash
+php artisan planned-transactions:process
+```
+
+Loguje sve aktivne planirane transakcije čiji `next_due_date` je danas ili u naredna 3 dana.
+
+**Schedule:** svaki dan u ponoć (00:00), konfigurisano u `routes/console.php`:
+
+```php
+Schedule::command('planned-transactions:process')->dailyAt('00:00');
+```
+
+Da bi schedule radio, mora biti aktiviran cron na serveru:
+
+```bash
+* * * * * cd /path-to-project && php artisan schedule:run >> /dev/null 2>&1
+```
 
 ---
 

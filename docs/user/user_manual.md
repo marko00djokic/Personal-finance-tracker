@@ -1,7 +1,7 @@
 # Korisnički priručnik — Personal Finance Tracker
 
 > Ovaj dokument se dopunjava nakon svake faze razvoja.
-> Poslednje ažuriranje: 2026-04-03 (inicijalizacija)
+> Poslednje ažuriranje: 2026-04-04 (Faza 3)
 
 ---
 
@@ -121,7 +121,44 @@ Balans se automatski koriguje (stari efekat se poništava, novi primenjuje).
 
 ## 6. Planirane transakcije
 
-> Sekcija se popunjava u Fazi 3
+Planirane transakcije su buduće uplate ili rashodi koji se ponavljaju po određenom rasporedu — npr. mesečna kirija, pretplata, plata.
+
+### Pregled planiranih transakcija
+
+Klikni na **Planirane** u navigaciji. Stranica je podeljena u tri sekcije:
+
+1. **Dospele danas ili zakasnele** (crvena sekcija) — zahtevaju akciju
+2. **Predstojeće (aktivne)** — buduće planirane transakcije
+3. **Neaktivne** — jednokratne transakcije koje su već obrađene
+
+Ako ima dospelih transakcija, u navigaciji se prikazuje **crveni badge** sa brojem.
+
+### Dodavanje planirane transakcije
+
+1. Klikni **+ Nova planirana transakcija**
+2. Izaberi tip: **Prihod** ili **Rashod**
+3. Unesi iznos u RSD
+4. Opcionalno izaberi kategoriju i opis
+5. Unesi datum prvog dospeća
+6. Izaberi tip ponavljanja:
+   - **Jednokratno** — neće se ponavljati (deaktivira se nakon potvrde)
+   - **Dnevno** — svaki dan
+   - **Nedeljno** — svake 7 dana
+   - **Mesečno** — isti dan u mesecu (možeš zadati dan 1–31)
+   - **Godišnje** — isti datum svake godine
+7. Klikni **Kreiraj**
+
+### Potvrda dospele transakcije
+
+Kada transakcija dospeva (datum dospeća je danas ili ranije):
+
+- **Potvrdi** — kreira stvarnu transakciju u evidenciji i ažurira tekući balans. Datum dospeća se automatski pomera na sledeći period.
+- **Preskoči** — samo pomera datum dospeća na sledeći period, bez kreiranja transakcije.
+
+### Izmena i brisanje
+
+- Klikni **Izmeni** pored planirane transakcije da promeniš podatke ili datum dospeća.
+- Klikni **Obriši** i potvrdi dijalog da trajno obrišeš planiranu transakciju.
 
 ---
 

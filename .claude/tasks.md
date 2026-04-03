@@ -31,17 +31,17 @@
 - [x] Flash poruke (success/error) na svim operacijama
 - [x] Potvrda pre brisanja (browser confirm putem Alpine.js)
 
-## FAZA 3 — Recurring transakcije
-- [ ] PlannedTransactionController sa svim CRUD metodama
-- [ ] Blade view-ovi za planned transactions (index, create, edit)
-- [ ] StorePlannedTransactionRequest i UpdatePlannedTransactionRequest
-- [ ] PlannedTransactionService::calculateNextDueDate() logika
-- [ ] Artisan komanda `planned-transactions:process`
-- [ ] Scheduled job (svaki dan u ponoć) za procesiranje dospelih transakcija
-- [ ] Akcija "Potvrdi" — kreira Transaction, pomera next_due_date
-- [ ] Akcija "Preskoči" — samo pomera next_due_date
-- [ ] Badge u navigaciji sa brojem dospelih planned transakcija
-- [ ] Sekcija "Dospele danas" na planned-transactions/index
+## FAZA 3 — Recurring transakcije ✅ ZAVRŠENO
+- [x] PlannedTransactionController sa svim CRUD metodama
+- [x] Blade view-ovi za planned transactions (index, create, edit)
+- [x] StorePlannedTransactionRequest i UpdatePlannedTransactionRequest
+- [x] PlannedTransactionService::calculateNextDueDate() logika
+- [x] Artisan komanda `planned-transactions:process`
+- [x] Scheduled job (svaki dan u ponoć) za procesiranje dospelih transakcija
+- [x] Akcija "Potvrdi" — kreira Transaction, pomera next_due_date
+- [x] Akcija "Preskoči" — samo pomera next_due_date
+- [x] Badge u navigaciji sa brojem dospelih planned transakcija
+- [x] Sekcija "Dospele danas" na planned-transactions/index
 
 ## FAZA 4 — Dashboard & Grafovi
 - [ ] DashboardController sa svim potrebnim agregatima

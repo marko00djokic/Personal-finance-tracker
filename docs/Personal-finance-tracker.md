@@ -284,6 +284,8 @@ Radimo na projektu Personal Finance Tracker. Sve konvencije su u .claude/project
 ### Na kraju sesije:
 - Ažuriraj .claude/progress.md
 - Ažuriraj .claude/tasks.md
+- Ažuriraj docs/technical/technical_manual.md
+- Ažuriraj docs/user/user_manual.md
 - Napiši "✅ Context files ažurirani"
 ```
 

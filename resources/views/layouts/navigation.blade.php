@@ -21,6 +21,24 @@
                     <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
                         {{ __('Kategorije') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('planned-transactions.index')" :active="request()->routeIs('planned-transactions.*')">
+                        <span class="flex items-center gap-1.5">
+                            {{ __('Planirane') }}
+                            @auth
+                                @php
+                                    $duePlannedCount = Auth::user()->plannedTransactions()
+                                        ->where('is_active', true)
+                                        ->whereDate('next_due_date', '<=', now())
+                                        ->count();
+                                @endphp
+                                @if($duePlannedCount > 0)
+                                    <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-red-500 text-white text-xs font-bold">
+                                        {{ $duePlannedCount }}
+                                    </span>
+                                @endif
+                            @endauth
+                        </span>
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -90,6 +108,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
                 {{ __('Kategorije') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('planned-transactions.index')" :active="request()->routeIs('planned-transactions.*')">
+                {{ __('Planirane transakcije') }}
             </x-responsive-nav-link>
         </div>
 

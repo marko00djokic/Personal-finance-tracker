@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PlannedTransactionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,12 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('categories', CategoryController::class)->except(['show']);
     Route::resource('transactions', TransactionController::class)->except(['show']);
+
+    Route::resource('planned-transactions', PlannedTransactionController::class)->except(['show']);
+    Route::post('planned-transactions/{plannedTransaction}/confirm', [PlannedTransactionController::class, 'confirm'])
+        ->name('planned-transactions.confirm');
+    Route::post('planned-transactions/{plannedTransaction}/skip', [PlannedTransactionController::class, 'skip'])
+        ->name('planned-transactions.skip');
 });
 
 require __DIR__.'/auth.php';
