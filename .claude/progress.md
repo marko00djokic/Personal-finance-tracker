@@ -181,8 +181,20 @@
 
 ---
 
+---
+
+## Poslednja sesija: 2026-04-04
+### Šta je urađeno (Dokumentacija — Faza 6 plan):
+- Dodata **FAZA 6** u `docs/Personal-finance-tracker.md`:
+  - Opis faze u sekciji 2 (Plan razvoja po fazama) — 15 taskova na visokom nivou
+  - Detaljan FAZA 6 PROMPT na kraju fajla — korak-po-korak vodič za upgrade Laravel 11 → 13
+- Ažuriran `.claude/tasks.md` — dodata sekcija **FAZA 6** sa 20 konkretnih taskova (status: ⏳ NIJE POČETO)
+- Ažuriran `.claude/progress.md` (ovaj fajl)
+
+---
+
 ## Sledeća sesija treba da počne sa:
 
-Sve faze završene. Projekat je spreman za produkciju.
+Koristiti **FAZA 6 PROMPT** iz `docs/Personal-finance-tracker.md` za pokretanje upgrade-a Laravel 11 → 13.
 
 Eventualni backlog zadaci su opisani u `.claude/tasks.md` → sekcija **Backlog / Buduće ideje**.

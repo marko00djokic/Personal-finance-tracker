@@ -33,9 +33,9 @@ planiranjem na jednom mestu.
 
 ## 2. Plan razvoja po fazama
 
-Projekat je organizovan u 5 faza. Redosled je određen principom "od jezgra prema periferiji":
+Projekat je organizovan u 6 faza. Redosled je određen principom "od jezgra prema periferiji":
 najpre stabilna infrastruktura i auth, zatim core poslovni entiteti, pa složenije features,
-i na kraju vizualizacija i polishing.
+i na kraju vizualizacija, polishing i upgrade na najnoviju Laravel verziju.
 
 ---
 
@@ -117,6 +117,33 @@ i na kraju vizualizacija i polishing.
 - Kompletiranje `technical_manual.md` i `user_manual.md`
 - E2E test plan dokument
 - Finalna revizija svih validacija
+
+---
+
+### FAZA 6 — Upgrade Laravel verzije (11 → 13)
+
+**Cilj:** Upgrade projekta sa Laravel 11 na Laravel 13 uz zadržavanje kompletne funkcionalnosti.
+
+**Taskovi:**
+- Pregled Laravel 12 i 13 upgrade guide-ova i identifikacija breaking changes
+- Ažuriranje `composer.json`:
+  - `laravel/framework` na `^13.0`
+  - PHP minimalna verzija na `^8.3` (ili `^8.4` ako Laravel 13 zahteva)
+  - Ažuriranje svih zavisnih paketa (`barryvdh/laravel-dompdf`, `laravel/breeze` itd.)
+- Pokretanje `composer update` i rešavanje konflikata zavisnosti
+- Migracija config fajlova prema novoj Laravel 13 strukturi
+- Pregled i ažuriranje middleware stack-a (promenjena registracija u Laravel 12+)
+- Pregled route fajlova — provjera kompatibilnosti sa novim router-om
+- Ažuriranje `bootstrap/app.php` prema Laravel 13 bootstrapping modelu
+- Pregled i ažuriranje svih deprecated metoda i klasa:
+  - `Illuminate\Http\Request` promjene
+  - `Carbon` verzija i API izmjene
+  - Eloquent promjene (ako postoje)
+- Ažuriranje Blade direktiva i Alpine.js kompatibilnosti
+- Ažuriranje `vite.config.js` i `package.json` ako postoje promjene
+- Pokretanje `php artisan migrate:fresh --seed` — mora proći bez grešaka
+- Pokretanje svih ruta i provjera da sva funkcionalnost radi ispravno
+- Ažuriranje `composer.lock` i čišćenje cache-a (`php artisan optimize:clear`)
 
 ---
 
@@ -383,4 +410,95 @@ Radimo na projektu Personal Finance Tracker. Sve konvencije su u .claude/project
 - Ažuriraj docs/technical/technical_manual.md
 - Ažuriraj docs/user/user_manual.md
 - Napiši "✅ Context files ažurirani — Faza 5 završena, projekat spreman za produkciju"
+```
+
+---
+
+## FAZA 6 PROMPT — Upgrade Laravel Version
+
+```
+Čitaj CLAUDE.md i .claude/progress.md pre nego što počneš.
+
+## Zadatak — Faza 6: Upgrade Laravel 11 → 13
+
+Radimo na projektu Personal Finance Tracker. Trenutna verzija je Laravel 11.
+Potrebno je izvršiti upgrade na Laravel 13. Sve konvencije su u .claude/project.md.
+
+### Kontekst
+
+Projekat koristi:
+- Laravel 11 + Breeze (Blade + Alpine.js)
+- PHP 8.3
+- MySQL 8
+- TailwindCSS + Vite
+- barryvdh/laravel-dompdf ^3.1
+- Composer 2.x
+
+### Šta treba uraditi:
+
+1. **Priprema — analiza breaking changes**
+   - Pročitaj Laravel 12 upgrade guide (laravel.com/docs/12.x/upgrade)
+   - Pročitaj Laravel 13 upgrade guide (laravel.com/docs/13.x/upgrade)
+   - Identifikuj sve breaking changes relevantne za ovaj projekat
+   - Napravi listu zahvaćenih fajlova pre nego što počneš sa izmjenama
+
+2. **Ažuriranje composer.json**
+   - Promijeni `laravel/framework` na `^13.0`
+   - Provjeri i ažuriraj minimalnu PHP verziju ako je potrebno
+   - Ažuriraj `laravel/breeze` na verziju kompatibilnu sa Laravel 13
+   - Ažuriraj `barryvdh/laravel-dompdf` na verziju kompatibilnu sa Laravel 13
+   - Ažuriraj ostale pakete (`laravel/tinker`, `phpunit/phpunit` itd.)
+   - Pokreni `composer update` i riješi sve konflikte zavisnosti
+
+3. **Bootstrap i middleware**
+   - Provjeri `bootstrap/app.php` — Laravel 12 uveo novi način registracije middleware-a
+   - Ažuriraj middleware registraciju u skladu sa Laravel 13 konvencijama
+   - Provjeri `app/Http/Middleware/` — ukloni ili prilagodi deprecated middleware klase
+   - Provjeri `app/Http/Kernel.php` — ako postoji, migrirati na novi model (Laravel 12+ nema Kernel)
+
+4. **Konfiguracija**
+   - Pokreni `php artisan config:publish` za config fajlove koji su promijenjeni u Laravel 13
+   - Provjeri `config/auth.php`, `config/database.php`, `config/session.php` za izmjene
+   - Ažuriraj `config/app.php` ako postoje deprecated opcije
+
+5. **Routes i Controllers**
+   - Provjeri `routes/web.php` i `routes/console.php` za deprecated sintaksu
+   - Provjeri sve Controller metode za deprecated Illuminate klase
+   - Provjeri FormRequest klase za promjene u validaciji API-u
+
+6. **Modeli i Eloquent**
+   - Provjeri sve modele za deprecated Eloquent metode ili promjene u casting-u
+   - Provjeri relacije i scope metode
+
+7. **Blade i frontend**
+   - Provjeri da su sve Blade direktive kompatibilne sa Laravel 13
+   - Ažuriraj `package.json` ako postoje promjene u Vite pluginu za Laravel
+   - Pokreni `npm install` i `npm run build` — mora proći bez grešaka
+
+8. **Artisan komande**
+   - Provjeri `app/Console/Commands/ProcessPlannedTransactions.php` za deprecated metode
+   - Provjeri schedule registraciju u `routes/console.php`
+
+9. **Verifikacija**
+   - `composer dump-autoload`
+   - `php artisan optimize:clear`
+   - `php artisan migrate:fresh --seed` — mora proći bez grešaka
+   - Ručno provjeri sve ključne rute: login, register, dashboard, transakcije,
+     kategorije, planirane transakcije, export CSV, export PDF
+   - Provjeri da nema PHP deprecation warningova u logovima (`storage/logs/laravel.log`)
+
+### Važne napomene
+
+- NE mijenjaj postojeće migracije — one su već pokrenute
+- NE mijenjaj `.env` fajl direktno
+- Ako paket nema Laravel 13 podršku, traži alternativu ili privremeno zadržite staru
+  verziju uz komentar u `composer.json`
+- Svaku promjenu dokumentuj kratkim komentarom u `.claude/decisions.md`
+
+### Na kraju sesije:
+- Ažuriraj .claude/progress.md
+- Ažuriraj .claude/tasks.md
+- Dodaj sve arhitekturalne odluke u .claude/decisions.md
+- Ažuriraj docs/technical/technical_manual.md (ažuriraj verzije u tech stack sekciji)
+- Napiši "✅ Context files ažurirani — Faza 6 završena, projekat na Laravel 13"
 ```
