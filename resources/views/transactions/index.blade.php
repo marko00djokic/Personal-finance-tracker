@@ -1,11 +1,24 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
+        <div class="flex flex-wrap justify-between items-center gap-3">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Transakcije</h2>
-            <a href="{{ route('transactions.create') }}"
-               class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 rounded-md">
-                + Nova transakcija
-            </a>
+            <div class="flex flex-wrap items-center gap-2">
+                <!-- Export buttons — reuse active filter params -->
+                <a href="{{ route('export.csv', request()->only(['date_from','date_to','category_id','type'])) }}"
+                   class="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+                    CSV
+                </a>
+                <a href="{{ route('export.pdf', request()->only(['date_from','date_to','category_id','type'])) }}"
+                   class="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+                    <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+                    PDF
+                </a>
+                <a href="{{ route('transactions.create') }}"
+                   class="bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 rounded-md">
+                    + Nova transakcija
+                </a>
+            </div>
         </div>
     </x-slot>
 
@@ -60,7 +73,7 @@
             </div>
 
             <!-- Tabela -->
-            <div class="bg-white shadow-sm rounded-lg overflow-hidden">
+            <div class="bg-white shadow-sm rounded-lg overflow-x-auto">
                 @if($transactions->isEmpty())
                     <p class="p-6 text-sm text-gray-500">Nema transakcija koje odgovaraju filteru.</p>
                 @else

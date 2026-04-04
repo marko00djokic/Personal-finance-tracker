@@ -1,7 +1,7 @@
 # Technical Manual — Personal Finance Tracker
 
 > Ovaj dokument se dopunjava nakon svake faze razvoja.
-> Poslednje ažuriranje: 2026-04-04 (Faza 4)
+> Poslednje ažuriranje: 2026-04-04 (Faza 5)
 
 ---
 
@@ -218,18 +218,90 @@ Koristi se isključivo za rashode. Ako `null` ili `0`, kategorija nema limit i n
 
 ---
 
-## 6. Testing
+## 6. Export (`app/Http/Controllers/ExportController.php`)
 
-> Sekcija se popunjava nakon svake faze
+| Metoda | Ruta | Opis |
+|--------|------|------|
+| `exportCsv(Request)` | `GET /export/csv` | Preuzimanje CSV fajla sa UTF-8 BOM, separator `;`, Excel-kompatibilan |
+| `exportPdf(Request)` | `GET /export/pdf` | Generisanje PDF-a via `barryvdh/laravel-dompdf`, A4 portrait |
+
+Obe metode prihvataju iste GET parametre kao `TransactionController@index` (`date_from`, `date_to`, `category_id`, `type`), pa export uvek reflektuje aktivni filter.
+
+Blade template za PDF: `resources/views/exports/transactions-pdf.blade.php`  
+Font: DejaVu Sans (podrazumevano u dompdf) — podržava UTF-8 karaktere.
 
 ---
 
-## 7. Deployment
+## 7. Rate Limiting
 
-> Sekcija se popunjava u Fazi 5
+Throttle middleware `throttle:60,1` primenjen na sve write route-ove (store/update/destroy) za sve tri resursa (categories, transactions, planned-transactions). Limit: 60 zahteva po minutu po IP adresi. Prekoračenje vraća HTTP 429.
 
 ---
 
-## 8. Troubleshooting
+## 8. Error stranice
 
-> Sekcija se popunjava tokom razvoja kada se identifikuju česti problemi
+| Fajl | HTTP kod |
+|------|---------|
+| `resources/views/errors/404.blade.php` | 404 Not Found |
+| `resources/views/errors/500.blade.php` | 500 Server Error |
+
+Laravel automatski servira ove template-ove kada odgovarajući HTTP kod bude bačen.
+
+---
+
+## 9. Testing
+
+E2E test plan: `docs/test/E2E_test_plan_v1.md`
+
+Pokriva:
+- TS-01: Autentifikacija (6 scenarija)
+- TS-02: Dashboard (8 scenarija)
+- TS-03: Kategorije (8 scenarija)
+- TS-04: Transakcije (12 scenarija)
+- TS-05: Planirane transakcije (8 scenarija)
+- TS-06: Export CSV/PDF (7 scenarija)
+- TS-07: Responsive dizajn (5 scenarija)
+- TS-08: Error stranice (2 scenarija)
+- TS-09: Sigurnost i rate limiting (3 scenarija)
+
+---
+
+## 10. Deployment
+
+### Produkcijske komande
+
+```bash
+# Cache sve konfiguracije
+php artisan optimize
+
+# Kompajliranje assets za produkciju
+npm run build
+
+# Migracije bez reseta
+php artisan migrate
+```
+
+### Cron scheduler (za planirane transakcije)
+
+```bash
+* * * * * cd /path-to-project && php artisan schedule:run >> /dev/null 2>&1
+```
+
+### .env — produkcione vrednosti
+
+```ini
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://your-domain.com
+```
+
+---
+
+## 11. Troubleshooting
+
+| Problem | Uzrok | Rešenje |
+|---------|-------|---------|
+| Budget progress bar nema boje | Tailwind JIT purge dinamičnih klasa | Koristiti `style` atribut umesto dinamičnih klasa |
+| CSV fajl se otvori sa krivim karakterima u Excelu | Nedostaje UTF-8 BOM | Dodat `\xEF\xBB\xBF` na početak fajla |
+| dompdf fontovi ne podržavaju lokalne karaktere | Nema odgovarajućeg fonta | Koristiti `DejaVu Sans` koji dompdf bundluje |
+| `current_balance` nije konzistentno sa transakcijama | Nije pokrenuta retroaktivna rekalikulacija | Ručno izračunati zbir svih transakcija i ažurirati kolonu |

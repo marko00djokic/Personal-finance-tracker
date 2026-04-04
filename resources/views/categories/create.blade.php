@@ -10,7 +10,7 @@
                 <form method="POST" action="{{ route('categories.store') }}">
                     @csrf
 
-                    <div class="space-y-5">
+                    <div class="space-y-5" x-data="{ categoryType: '{{ old('type') }}' }">
                         <div>
                             <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Naziv</label>
                             <input type="text" id="name" name="name" value="{{ old('name') }}"
@@ -25,6 +25,7 @@
                             <label for="type" class="block text-sm font-medium text-gray-700 mb-1">Tip</label>
                             <select id="type" name="type"
                                     class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                    x-model="categoryType"
                                     required>
                                 <option value="">— Izaberi tip —</option>
                                 <option value="income"  {{ old('type') === 'income'  ? 'selected' : '' }}>Prihod</option>
@@ -55,11 +56,16 @@
                             <input type="number" id="monthly_limit" name="monthly_limit"
                                    value="{{ old('monthly_limit') }}"
                                    min="0" step="0.01"
-                                   class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                   placeholder="npr. 20000">
+                                   class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 disabled:bg-gray-100 disabled:cursor-not-allowed disabled:text-gray-400"
+                                   placeholder="npr. 20000"
+                                   :disabled="categoryType === 'income'"
+                                   x-effect="if (categoryType === 'income') $el.value = ''">
                             @error('monthly_limit')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
+                            <p class="mt-1 text-xs text-amber-600" x-show="categoryType === 'income'">
+                                Mesečni limit nije dostupan za kategorije tipa Prihod.
+                            </p>
                         </div>
                     </div>
 

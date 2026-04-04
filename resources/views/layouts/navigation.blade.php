@@ -119,6 +119,11 @@
             <div class="px-4">
                 <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
                 <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                @auth
+                    <div class="mt-1 text-sm font-semibold {{ Auth::user()->current_balance >= 0 ? 'text-green-600' : 'text-red-600' }}">
+                        {{ number_format(Auth::user()->current_balance, 2, ',', '.') }} RSD
+                    </div>
+                @endauth
             </div>
 
             <div class="mt-3 space-y-1">

@@ -14,7 +14,7 @@
 
             {{-- DOSPELE DANAS --}}
             @if($due->isNotEmpty())
-                <div class="bg-red-50 border border-red-200 shadow-sm rounded-lg overflow-hidden">
+                <div class="bg-red-50 border border-red-200 shadow-sm rounded-lg overflow-x-auto">
                     <div class="px-6 py-3 bg-red-100 border-b border-red-200">
                         <h3 class="font-semibold text-red-800">
                             Dospele danas ili zakasnele
@@ -97,7 +97,7 @@
             @endif
 
             {{-- PREDSTOJEĆE --}}
-            <div class="bg-white shadow-sm rounded-lg overflow-hidden">
+            <div class="bg-white shadow-sm rounded-lg overflow-x-auto">
                 <div class="px-6 py-3 bg-gray-50 border-b border-gray-200">
                     <h3 class="font-semibold text-gray-700">Predstojeće (aktivne)</h3>
                 </div>
@@ -163,7 +163,7 @@
 
             {{-- NEAKTIVNE --}}
             @if($inactive->isNotEmpty())
-                <div class="bg-white shadow-sm rounded-lg overflow-hidden">
+                <div class="bg-white shadow-sm rounded-lg overflow-x-auto">
                     <div class="px-6 py-3 bg-gray-50 border-b border-gray-200">
                         <h3 class="font-semibold text-gray-500 text-sm">Neaktivne (jednokratne završene)</h3>
                     </div>

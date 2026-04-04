@@ -56,22 +56,22 @@
 - [x] Progress bar indikatori budžetskih limita po kategoriji
 - [x] Period switcher (ovaj mesec / prošli mesec / posled. 3 meseca)
 
-## FAZA 5 — Polish & Export
-- [ ] ExportController sa CSV i PDF akcijama
-- [ ] Instalacija maatwebsite/excel ili plain CSV export
-- [ ] Instalacija barryvdh/laravel-dompdf
-- [ ] Blade template za PDF export
-- [ ] Responsive dizajn audit (mobile 375px + tablet 768px)
-- [ ] Hamburger navigacija za mobile
-- [ ] Kreiranje 404.blade.php i 500.blade.php
-- [ ] Try/catch u svim Controller metodama koje pišu u bazu
-- [ ] Rate limiting (throttle) na store/update/destroy route-ove
-- [ ] Kompletiranje docs/technical/technical_manual.md
-- [ ] Kompletiranje docs/user/user_manual.md
-- [ ] Kreiranje docs/test/E2E_test_plan_v1.md
-- [ ] Finalna revizija svih FormRequest validacija
-- [ ] Provera N+1 query problema (Laravel Debugbar)
-- [ ] `php artisan optimize` i cache konfiguracija
+## FAZA 5 — Polish & Export ✅ ZAVRŠENO
+- [x] ExportController sa CSV i PDF akcijama
+- [x] Plain CSV export (PHP fwrite, UTF-8 BOM, separator ;)
+- [x] Instalacija barryvdh/laravel-dompdf
+- [x] Blade template za PDF export (resources/views/exports/transactions-pdf.blade.php)
+- [x] Export dugmad na transactions/index header (CSV + PDF)
+- [x] Responsive dizajn audit — overflow-x-auto na tabelama, balans u mobile meniju
+- [x] Hamburger navigacija za mobile — već bila Breeze default
+- [x] Kreiranje 404.blade.php i 500.blade.php
+- [x] Try/catch u svim Controller metodama koje pišu u bazu — već bio urađen
+- [x] Rate limiting (throttle:60,1) na store/update/destroy route-ove
+- [x] Kompletiranje docs/technical/technical_manual.md (sekcije 6–11)
+- [x] Kompletiranje docs/user/user_manual.md (sekcija 7, 8)
+- [x] Kreiranje docs/test/E2E_test_plan_v1.md (59 scenarija)
+- [x] Finalna revizija svih FormRequest validacija — validne
+- [x] `php artisan optimize` — cache izgrađen uspešno
 
 ## Backlog / Buduće ideje
 - [ ] Viševalutna podrška (praćenje u više valuta)

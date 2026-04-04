@@ -1,6 +1,29 @@
 # Progress Log
 
 ## Poslednja sesija: 2026-04-04
+### Šta je urađeno (Faza 5):
+- Instaliran `barryvdh/laravel-dompdf` (^3.1)
+- Kreiran `ExportController` sa metodama `exportCsv()` i `exportPdf()`
+  - Oba eksporta prihvataju iste filtere kao `TransactionController@index`
+  - CSV: plain PHP fwrite sa UTF-8 BOM, separator `;`, Excel-kompatibilan
+  - PDF: dompdf, A4 portrait, summary kartice + tabela transakcija
+- Kreiran `resources/views/exports/transactions-pdf.blade.php`
+- Dodata export dugmad (CSV + PDF) na `transactions/index` header
+- Dodate export rute (`GET /export/csv`, `GET /export/pdf`) u `routes/web.php`
+- Dodato rate limiting (`throttle:60,1`) na sve store/update/destroy route-ove za sve 3 resursa
+- Kreirana `resources/views/errors/404.blade.php`
+- Kreirana `resources/views/errors/500.blade.php`
+- Responsive audit:
+  - Navigacija: hamburger meni već postoji (Breeze default), dodat prikaz balansa u mobile meniju
+  - Tabele: `overflow-hidden` → `overflow-x-auto` na `transactions/index` i `planned-transactions/index`
+- `php artisan optimize` — sve 4 cache sekcije završene uspešno
+- Kreiran `docs/test/E2E_test_plan_v1.md` sa 59 test scenarija u 9 sekcija
+- Kompletiran `docs/technical/technical_manual.md` (sekcije 6–11: Export, Rate Limiting, Error stranice, Testing, Deployment, Troubleshooting)
+- Kompletiran `docs/user/user_manual.md` (sekcija 7: Export, sekcija 8: FAQ)
+
+---
+
+## Prethodna sesija: 2026-04-04
 ### Šta je urađeno (Faza 4):
 - Nova migracija `add_monthly_limit_to_categories_table` — dodaje nullable decimal kolonu `monthly_limit` u tabelu categories
 - Ažuriran `Category` model: `monthly_limit` dodat u `$fillable` i `$casts`
@@ -114,7 +137,7 @@
 | Transakcije CRUD        | ✅ Završeno          |
 | Recurring transakcije   | ✅ Završeno          |
 | Dashboard / Grafovi     | ✅ Završeno          |
-| Export (CSV/PDF)        | ❌ Nije početo       |
+| Export (CSV/PDF)        | ✅ Završeno          |
 
 ---
 
@@ -160,7 +183,6 @@
 
 ## Sledeća sesija treba da počne sa:
 
-**Faza 5 — Polish & Export**
+Sve faze završene. Projekat je spreman za produkciju.
 
-Prompt za ovu fazu se nalazi u:
-`docs/Personal-finance-tracker.md` → sekcija **FAZA 5 PROMPT**
+Eventualni backlog zadaci su opisani u `.claude/tasks.md` → sekcija **Backlog / Buduće ideje**.

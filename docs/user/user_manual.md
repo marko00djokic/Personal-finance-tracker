@@ -1,7 +1,7 @@
 # Korisnički priručnik — Personal Finance Tracker
 
 > Ovaj dokument se dopunjava nakon svake faze razvoja.
-> Poslednje ažuriranje: 2026-04-04 (Faza 4)
+> Poslednje ažuriranje: 2026-04-04 (Faza 5)
 
 ---
 
@@ -205,10 +205,46 @@ Kada transakcija dospeva (datum dospeća je danas ili ranije):
 
 ## 7. Export podataka
 
-> Sekcija se popunjava u Fazi 5
+Na stranici **Transakcije** nalaze se dva dugmeta za preuzimanje podataka u gornjem desnom uglu:
+
+### CSV export
+
+- Klikni dugme **CSV** pored "+ Nova transakcija"
+- Preuzima se fajl `transakcije_YYYY-MM-DD.csv`
+- Separator kolona: `;` (semicolon) — kompatibilan sa Microsoft Excel
+- Kolone: Datum; Tip; Kategorija; Opis; Iznos (RSD)
+- Fajl je UTF-8 enkodovan (sa BOM) — srpski karakteri su ispravno prikazani
+
+### PDF export
+
+- Klikni dugme **PDF**
+- Preuzima se fajl `transakcije_YYYY-MM-DD.pdf`
+- PDF uključuje:
+  - Zaglavlje sa tvojim imenom, periodom i datumom generisanja
+  - Summary kartice: Prihodi, Rashodi, Neto, Broj transakcija
+  - Kompletnu tabelu transakcija
+
+### Filtriran export
+
+Export uvek odražava **aktivne filtere** na stranici. Na primer:
+- Postavi filter "Od: 01.01.2026 Do: 31.01.2026" i klikni CSV → dobijaš samo januarske transakcije
+- Filteri se automatski prenose u URL export dugmića
 
 ---
 
 ## 8. Česta pitanja (FAQ)
 
-> Sekcija se popunjava tokom razvoja na osnovu korisničkih pitanja
+**Zašto se rashod koji sam unio ne vidi na grafikonu?**  
+Proveri da li je datum transakcije u okviru izabranog perioda na dashboardu (period switcher u gornjem desnom uglu).
+
+**Zaboravio/la sam da potvrdim dospelu planiranu transakciju. Šta se dešava?**  
+Transakcija ostaje u "Dospele danas ili zakasnele" sekciji sve dok je ne potvrdićeš ili preskočiš. Nema automatskog odbacivanja.
+
+**Mogu li da promenim valutu?**  
+Aplikacija trenutno podržava samo RSD. Viševalutna podrška je planirana za buduće verzije.
+
+**Zašto ne mogu da obrišem kategoriju?**  
+Kategorija ima vezane transakcije. Promeni kategoriju tim transakcijama (ili ih obriši), pa pokušaj ponovo.
+
+**Kako da resetujem balans?**  
+Balans se automatski izračunava iz svih transakcija. Nema ručnog resetovanja — ako je netačan, proveri da li postoje transakcije s greškom u tipu ili iznosu.
