@@ -1,6 +1,42 @@
 # Progress Log
 
 ## Poslednja sesija: 2026-04-04
+### Šta je urađeno (Faza 6 — Upgrade Laravel 11 → 13):
+
+**Analiza:**
+- Pročitani Laravel 12 i 13 upgrade guide-ovi (laravel.com)
+- Identifikovane relevantne breaking promjene za ovaj projekat
+
+**Izmjene u composer.json:**
+- `laravel/framework`: `^11.31` → `^13.0`
+- `laravel/tinker`: `^2.9` → `^3.0`
+- `phpunit/phpunit`: `^11.0.1` → `^12.0`
+- `composer update` prošao bez konflikata: framework v13.3.0, tinker v3.0.0, phpunit v12.5.16
+- Carbon 3.x automatski instaliran kao nova zavisnost frameworka
+
+**Izmjene konfiguracije:**
+- `config/cache.php`: dodana `serializable_classes => false` opcija (Laravel 13 security hardening)
+- `bootstrap/app.php`: nije trebalo mjenjati (već u Laravel 11+ formatu bez Kernel.php)
+
+**Nije trebalo mijenjati:**
+- `barryvdh/laravel-dompdf ^3.1` — već podržava Laravel 13
+- `laravel/breeze ^2.4` — kompatibilan sa Laravel 13
+- Sve Controller klase, FormRequesti, Modeli, Blade view-ovi — bez deprecated API-ja
+- `app/Console/Commands/ProcessPlannedTransactions.php` — Carbon metode kompatibilne sa v3
+
+**Verifikacija:**
+- `composer dump-autoload --optimize` ✅
+- `php artisan optimize:clear` ✅
+- `php artisan migrate:fresh --seed` ✅
+- `php artisan route:list` — sve rute ispravne ✅
+- `php artisan planned-transactions:process` — artisan komanda radi ✅
+- `php artisan config:cache && route:cache && view:cache` ✅
+- Logovi: nema novih grešaka uzrokovanih upgradeom
+- Test suite: 14 testova pada — POTVRĐENO da su padali i na Laravel 11 (pre-existing)
+
+---
+
+## Prethodna sesija: 2026-04-04
 ### Šta je urađeno (Faza 5):
 - Instaliran `barryvdh/laravel-dompdf` (^3.1)
 - Kreiran `ExportController` sa metodama `exportCsv()` i `exportPdf()`

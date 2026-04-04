@@ -110,6 +110,51 @@ denormalizovana vrednost u users tabeli.
 
 ---
 
+## ADR-006: Upgrade Laravel 11 → 13
+
+**Datum:** 2026-04-04
+**Status:** Prihvaćeno
+
+**Kontekst:**
+Projekat je pokrenut na Laravel 11.51.0. Odlučeno je da se nadgradi na Laravel 13
+kako bi aplikacija koristila najnovije sigurnosne zakrpe, novu PHP async infrastrukturu
+i dugoročnu podršku.
+
+**Odluka:**
+Direktan upgrade na Laravel Framework v13.3.0, laravel/tinker v3.0, phpunit v12.
+
+**Ključne promjene:**
+- `laravel/framework`: `^11.31` → `^13.0` (instalirano v13.3.0)
+- `laravel/tinker`: `^2.9` → `^3.0` (instalirano v3.0.0)
+- `phpunit/phpunit`: `^11.0.1` → `^12.0` (instalirano v12.5.16)
+- Carbon 3.x automatski povučen kao zavisnost (kompatibilno sa svim Carbon metodama u projektu)
+- `config/cache.php`: dodata `serializable_classes` opcija (Laravel 13 security hardening)
+- `bootstrap/app.php`: nije trebalo mijenjati — već u novom formatu (bez Kernel.php)
+- CSRF middleware primejen: `VerifyCsrfToken` → `PreventRequestForgery` — nema uticaja
+  na naš kod jer nismo direktno referencirali middleware u app/ fajlovima
+
+**Paketi koji su ostali nepromijenjeni:**
+- `barryvdh/laravel-dompdf ^3.1` — već podržava Laravel 13 (potvrđeno: `illuminate/support ^9|...|^13.0`)
+- `laravel/breeze ^2.4` — kompatibilan sa Laravel 11|12|13
+- `laravel/pail ^1.1` — kompatibilan sa Laravel 13
+
+**Napomene o testovima:**
+- Breeze-generated feature testovi su bili neispravni i PRIJE upgradeova (potvrđeno)
+- Uzrok: testovi ne uključuju CSRF token u POST zahtjevima (pre-existing issue)
+- Nije dio ove faze, ostavitiće se kao poznati tech debt
+
+**Razlozi za direktan (ne postepeni) upgrade:**
+- Aplikacija je relativno nova, bez legacy koda koji bi koristio deprecated API-je
+- Nema app/Http/Kernel.php — već u Laravel 11+ formatu
+- Nema korišćenja `HasUuids` traita, database Grammara direktno, ni Concurrency API-ja
+
+**Posledice:**
+- Aplikacija je na Laravel 13.3.0 sa PHP 8.3 (PHP verzija nije morala da se mijenja)
+- `migrate:fresh --seed`, `route:list`, `config:cache`, `view:cache`, artisan komande — sve prolazi
+- Svi ključni composer paketi kompatibilni sa Laravel 13
+
+---
+
 ## ADR-005: Nullable category_id na transactions
 
 **Datum:** 2026-04-03

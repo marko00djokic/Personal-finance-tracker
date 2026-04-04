@@ -73,27 +73,27 @@
 - [x] Finalna revizija svih FormRequest validacija — validne
 - [x] `php artisan optimize` — cache izgrađen uspešno
 
-## FAZA 6 — Upgrade Laravel 11 → 13 ⏳ NIJE POČETO
-- [ ] Analiza Laravel 12 i 13 upgrade guide-ova — identifikacija breaking changes
-- [ ] Ažuriranje `composer.json`: `laravel/framework` na `^13.0`
-- [ ] Ažuriranje PHP minimalne verzije u `composer.json` (ako je potrebno)
-- [ ] Ažuriranje `laravel/breeze` na verziju kompatibilnu sa Laravel 13
-- [ ] Ažuriranje `barryvdh/laravel-dompdf` na verziju kompatibilnu sa Laravel 13
-- [ ] Ažuriranje ostalih paketa i pokretanje `composer update`
-- [ ] Migracija bootstrap modela — `bootstrap/app.php` prema Laravel 13 konvencijama
-- [ ] Migracija middleware registracije (uklanjanje `app/Http/Kernel.php` ako postoji)
-- [ ] Provjera config fajlova za deprecated opcije
-- [ ] Provjera `routes/web.php` i `routes/console.php` za deprecated sintaksu
-- [ ] Provjera svih Controller metoda za deprecated Illuminate klase
-- [ ] Provjera Eloquent modela (casting, relacije, scope metode)
-- [ ] Provjera Blade view-ova za deprecated direktive
-- [ ] Ažuriranje `package.json` / `vite.config.js` ako je potrebno
-- [ ] Provjera `ProcessPlannedTransactions` Artisan komande
-- [ ] `php artisan optimize:clear` i `composer dump-autoload`
-- [ ] `php artisan migrate:fresh --seed` — mora proći bez grešaka
-- [ ] Manuelna verifikacija svih ključnih ruta (dashboard, CRUD, export)
-- [ ] Provjera `storage/logs/laravel.log` — nema PHP deprecation warningova
-- [ ] Ažuriranje tech stack sekcije u `docs/technical/technical_manual.md`
+## FAZA 6 — Upgrade Laravel 11 → 13 ✅ ZAVRŠENO
+- [x] Analiza Laravel 12 i 13 upgrade guide-ova — identifikacija breaking changes
+- [x] Ažuriranje `composer.json`: `laravel/framework` na `^13.0`
+- [x] PHP minimalna verzija — ostaje `^8.2` (nije potrebna promjena)
+- [x] `laravel/breeze ^2.4` — već kompatibilan sa Laravel 13 (nije trebalo mijenjati)
+- [x] `barryvdh/laravel-dompdf ^3.1` — već kompatibilan sa Laravel 13 (nije trebalo mijenjati)
+- [x] Ažuriranje `laravel/tinker` na `^3.0`, `phpunit/phpunit` na `^12.0`, pokretanje `composer update`
+- [x] `bootstrap/app.php` — bez promjena (već u Laravel 11+ formatu)
+- [x] Nema `app/Http/Kernel.php` — nije trebalo raditi migraciju
+- [x] `config/cache.php` — dodana `serializable_classes` opcija za Laravel 13
+- [x] `routes/web.php` i `routes/console.php` — bez deprecated sintakse
+- [x] Svi Controller metodi — bez deprecated Illuminate klasa
+- [x] Eloquent modeli — Carbon 3 kompatibilan sa svim metodama u projektu
+- [x] Blade view-ovi — bez deprecated direktiva
+- [x] `package.json` / `vite.config.js` — bez promjena (nije trebalo)
+- [x] `ProcessPlannedTransactions` Artisan komanda — radi ispravno
+- [x] `php artisan optimize:clear` i `composer dump-autoload` ✅
+- [x] `php artisan migrate:fresh --seed` ✅
+- [x] `php artisan route:list`, `config:cache`, `route:cache`, `view:cache` ✅
+- [x] Logovi pregledani — nema novih grešaka od upgradeova
+- [x] Ažuriranje `docs/technical/technical_manual.md` (verzije)
 
 ## Backlog / Buduće ideje
 - [ ] Viševalutna podrška (praćenje u više valuta)

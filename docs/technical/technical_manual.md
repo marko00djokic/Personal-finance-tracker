@@ -1,7 +1,21 @@
 # Technical Manual — Personal Finance Tracker
 
 > Ovaj dokument se dopunjava nakon svake faze razvoja.
-> Poslednje ažuriranje: 2026-04-04 (Faza 5)
+> Poslednje ažuriranje: 2026-04-04 (Faza 6)
+
+## Tech Stack
+
+| Komponenta | Verzija |
+|---|---|
+| Laravel Framework | 13.3.0 |
+| PHP | 8.3 |
+| Laravel Breeze | 2.4.x (Blade + Alpine.js) |
+| MySQL | 8+ |
+| TailwindCSS | 3.x |
+| Vite | 6.x |
+| barryvdh/laravel-dompdf | 3.1.x |
+| Carbon | 3.x |
+| PHPUnit | 12.x |
 
 ---
 
